@@ -619,68 +619,68 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
 
 - (void)sortingAutoScrollMovementCheck
 {
-    if (_sortMovingItem && _autoScrollActive) 
+    if (_sortMovingItem && _autoScrollActive)
     {
         CGPoint locationInMainView = [_sortingPanGesture locationInView:self];
         locationInMainView = CGPointMake(locationInMainView.x - self.contentOffset.x,
                                          locationInMainView.y -self.contentOffset.y
-        );
+                                         );
         
         
         CGFloat threshhold = _itemSize.height;
         CGPoint offset = self.contentOffset;
         CGPoint locationInScroll = [_sortingPanGesture locationInView:self];
         
-if( self.contentSize.width > self.bounds.size.width ){
-        // Going down
-        if (locationInMainView.x + threshhold > self.bounds.size.width) 
-        {            
-            offset.x += _itemSize.width / 2;
-            
-            if (offset.x > _maxPossibleContentOffset.x) 
+        if( self.contentSize.width > self.bounds.size.width ){
+            // Going down
+            if (locationInMainView.x + threshhold > self.bounds.size.width)
             {
-                offset.x = _maxPossibleContentOffset.x;
+                offset.x += _itemSize.width / 2;
+                
+                if (offset.x > _maxPossibleContentOffset.x)
+                {
+                    offset.x = _maxPossibleContentOffset.x;
+                }
+            }
+            // Going up
+            else if (locationInMainView.x - threshhold <= 0)
+            {
+                offset.x -= _itemSize.width / 2;
+                
+                if (offset.x < _minPossibleContentOffset.x)
+                {
+                    offset.x = _minPossibleContentOffset.x;
+                }
             }
         }
-        // Going up
-        else if (locationInMainView.x - threshhold <= 0) 
-        {            
-            offset.x -= _itemSize.width / 2;
-            
-            if (offset.x < _minPossibleContentOffset.x) 
-            {
-                offset.x = _minPossibleContentOffset.x;
-            }
-        }
-}
-    
-if( self.contentSize.height > self.bounds.size.height ){
-
-        // Going right
-        if (locationInMainView.y + threshhold > self.bounds.size.height) 
-        {            
-            offset.y += _itemSize.height / 2;
-            
-            if (offset.y > _maxPossibleContentOffset.y) 
-            {
-                offset.y = _maxPossibleContentOffset.y;
-            }
-        }
-        // Going left
-        else if (locationInMainView.y - threshhold <= 0) 
-        {            
-            offset.y -= _itemSize.height / 2;
-            
-            if (offset.y < _minPossibleContentOffset.y) 
-            {
-                offset.y = _minPossibleContentOffset.y;
-            }
-        }
-}
         
-        if (offset.x != self.contentOffset.x || offset.y != self.contentOffset.y) 
+        if( self.contentSize.height > self.bounds.size.height ){
+            
+            // Going right
+            if (locationInMainView.y + threshhold > self.bounds.size.height)
+            {
+                offset.y += _itemSize.height / 2;
+                
+                if (offset.y > _maxPossibleContentOffset.y)
+                {
+                    offset.y = _maxPossibleContentOffset.y;
+                }
+            }
+            // Going left
+            else if (locationInMainView.y - threshhold <= 0)
+            {
+                offset.y -= _itemSize.height / 2;
+                
+                if (offset.y < _minPossibleContentOffset.y)
+                {
+                    offset.y = _minPossibleContentOffset.y;
+                }
+            }
+        }
+        
+        if (offset.x != self.contentOffset.x || offset.y != self.contentOffset.y)
         {
-            [UIView animateWithDuration:kDefaultAnimationDuration 
+            [UIView animateWithDuration:kDefaultAnimationDuration
                                   delay:0
                                 options:kDefaultAnimationOptions
                              animations:^{
@@ -690,7 +690,7 @@ if( self.contentSize.height > self.bounds.size.height ){
                                  
                                  self.contentOffset = offset;
                                  
-                                 if (_autoScrollActive) 
+                                 if (_autoScrollActive)
                                  {
                                      [self sortingMoveDidContinueToPoint:locationInScroll];
                                  }
