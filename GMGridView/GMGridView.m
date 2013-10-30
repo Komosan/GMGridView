@@ -631,6 +631,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
         CGPoint offset = self.contentOffset;
         CGPoint locationInScroll = [_sortingPanGesture locationInView:self];
         
+if( self.contentSize.width > self.bounds.size.width ){
         // Going down
         if (locationInMainView.x + threshhold > self.bounds.size.width) 
         {            
@@ -651,7 +652,10 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
                 offset.x = _minPossibleContentOffset.x;
             }
         }
-        
+}
+    
+if( self.contentSize.height > self.bounds.size.height ){
+
         // Going right
         if (locationInMainView.y + threshhold > self.bounds.size.height) 
         {            
@@ -672,6 +676,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
                 offset.y = _minPossibleContentOffset.y;
             }
         }
+}
         
         if (offset.x != self.contentOffset.x || offset.y != self.contentOffset.y) 
         {
